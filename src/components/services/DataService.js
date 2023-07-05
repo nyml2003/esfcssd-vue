@@ -14,46 +14,7 @@ const apiClient = axios.create({
 
 // 定义一个用于获取数据的函数
 export default {
-  getAllData(table) {
-    return apiClient.post('/table',{'table':table});
-  },
-  getView(view) {
-    return apiClient.post('/view',{'view':view});
-  },
-  shutdown() {
-    return apiClient.post('/shutdown',{"content":"shutdown"});
-  },
-  update(table,id,col,value,pk){
-    return apiClient.post('/update',{"table":table,"id":id,"col":col,"value":value,"pk":pk});
-  },
-  delete(table,id,pk){
-    return apiClient.post('/delete',{"table":table,"id":id,"pk":pk});
-  },
-  insert(table,values){
-    return apiClient.post('/insert',{"table":table,"values":values});
-  },
-  login(username, password){
-    return apiClient.post('/login', {username:username,password:password});
-  },
-  register(username, password,role){
-    return apiClient.post('/register', {username:username,password:password,role:role});
-  },
-  select_profile(uid){
-    return apiClient.post('/SP', {uid:uid});
-  },
-  search(table,col,value){
-    return apiClient.post('/search',{"table":table,"col":col,"value":value});
-  },
-  guahao(table,values){
-    return apiClient.post('/guahao',{"table":table,"values":values});
-  },
-  deleteAllTables(){
-    return apiClient.post('/deleteAllTables');
-  },
-  createAllTables(){
-    return apiClient.post('/createAllTables');
-  },
-  hasTable(){
-    return apiClient.get('/hasTable');
+  getTable(table) {
+    return apiClient.post('/getTable'+table);
   }
 };
