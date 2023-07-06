@@ -34,6 +34,18 @@ const viewItems=ref(useStore().state.rawViewParanms)
   margin: 0px;
   width: 100%;
 }
-.el-table--scrollable-x .el-table__body-wrapper {
+
+.el-table
+{
+  width: 100%;
+}
+.el-table__header-wrapper table,.el-table__body-wrapper table{
+  width: 100% !important;
+}
+.el-table__header-wrapper, .el-table__body-wrapper{
   overflow-x: hidden;
-}</style>
+}
+.el-table__body, .el-table__footer, .el-table__header{
+  table-layout: auto;
+}
+</style>
