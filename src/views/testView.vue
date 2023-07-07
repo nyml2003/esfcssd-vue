@@ -27,7 +27,7 @@
   </template>
   
 <script setup>
-import { ref } from "vue";
+import { ref } from "vue"
 const tableData = ref([
   {
     dno: 21,
@@ -101,7 +101,7 @@ const tableData = ref([
     ddeptno: 101,
     tno: 105,
   },
-]);
+])
 const columns = [
   { label: "编号", prop: "dno", type: "fixed" },
   { label: "姓名", prop: "dname", type: "input" },
@@ -117,7 +117,7 @@ const columns = [
   { label: "年龄", prop: "dage", type: "input" },
   { label: "部门编号", prop: "ddeptno", type: "input" },
   { label: "职位编号", prop: "tno", type: "input" },
-];
+]
 
 </script>
 

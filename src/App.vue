@@ -1,17 +1,18 @@
 <template>
   <el-container style="width:100%">
-    <el-main>
-      <router-view :key=$route.fullPath></router-view>
-    </el-main> 
+    <el-header>
+    </el-header>
+    <el-container>
+      <el-aside>
+      </el-aside>
+      <el-main>
+        <router-view :key=$route.fullPath></router-view>
+      </el-main>
+    </el-container>
   </el-container>
 </template>
 
 <script setup>
-import {useStore} from 'vuex'
-import { ref } from 'vue';
-const store=useStore()
-const items=ref(useStore().state.rawTableParanms)
-const viewItems=ref(useStore().state.rawViewParanms)
 
 </script>
 
