@@ -4,7 +4,7 @@ import axios from 'axios'
 // 创建一个 axios 实例，用于发送请求
 const apiClient = axios.create({
   // 设置后端 API 的基础 URL
-  baseURL: "http://localhost:8090",
+  baseURL: "http://192.168.1.15:9090",
   // 设置请求头
   headers: {
     Accept: "application/json",
@@ -14,46 +14,25 @@ const apiClient = axios.create({
 
 // 定义一个用于获取数据的函数
 export default {
-  getView(table) {
-    return apiClient.get('/getView'+table)
+  hello(){
+    return apiClient.get('/Staff/hello')
   },
-  getRawTable(table,current=1,size=10) { 
-    return apiClient.post('/getRawTable'+table,{
-      current:current,
-      pageSize:size
-    })
+  searchCompanyStaff(queryData){
+    return apiClient.post('/Staff/searchCompanyStaff',queryData);
   },
-  getId(table) {
-    return apiClient.get('/getId'+table)
+  addCompanyStaff(staff){
+    console.log(staff)
+    return apiClient.post('/Staff/addCompanyStaff',staff);
   },
-  update(table,record) {
-    console.log("update"+table)
-    console.log(record)
-    return apiClient.post(
-      "/update"+table,
-      {
-        record:record
-      }
-    )
+  updateCompanyStaff(staff){
+    console.log("updateCompanyStaff")
+    return apiClient.put('/Staff/updateCompanyStaff',staff);
   },
-  delete(table,record) {
-    console.log("delete"+table)
-    console.log(record)
-    return apiClient.post(
-      "/delete"+table,
-      {
-        record:record
-      }
-    )
-  },
-  insert(table,record) {
-    console.log("insert"+table)
-    console.log(record)
-    return apiClient.post(
-      "/insert"+table,
-      {
-        record:record
-      }
-    )
+  deleteCompanyStaff(staffId,companyId){
+    console.log("deleteCompanyStaff")
+    console.log(staffId)
+    console.log(companyId)
+    return apiClient.delete('/Staff/deleteCompanyStaff/'+companyId+'/'+staffId);
   }
+  
 }

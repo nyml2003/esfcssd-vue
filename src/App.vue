@@ -1,19 +1,20 @@
 <template>
   <el-container style="width:100%">
-    <el-header>
+    <el-header style="margin:0 !important;padding: 0 !important;">
+      <topBar/>
     </el-header>
-    <el-container>
       <el-aside>
+        <asideBar/>
       </el-aside>
-      <el-main>
-        <router-view :key=$route.fullPath></router-view>
+      <el-main style="justify-content: center; align-items: center; width: 100%;height:100%">
+        <!-- <router-view :key=$route.fullPath></router-view> -->
       </el-main>
-    </el-container>
   </el-container>
 </template>
 
 <script setup>
-
+import topBar from '@/components/topBar.vue';
+import asideBar from '@/components/asideBar.vue';
 </script>
 
 <style>
