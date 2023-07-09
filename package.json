@@ -12,6 +12,7 @@
     "axios": "^1.4.0",
     "core-js": "^3.31.1",
     "element-plus": "^2.3.7",
+    "js-cookie": "^3.0.5",
     "pnpm": "^8.6.6",
     "vue": "next",
     "vue-router": "^4.2.4",

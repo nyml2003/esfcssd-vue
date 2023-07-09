@@ -17,6 +17,9 @@ dependencies:
   element-plus:
     specifier: ^2.3.7
     version: 2.3.7(vue@3.2.36)
+  js-cookie:
+    specifier: ^3.0.5
+    version: 3.0.5
   pnpm:
     specifier: ^8.6.6
     version: 8.6.6
@@ -4931,6 +4934,11 @@ packages:
       '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
     dev: true
+
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+    dev: false
 
   /js-message@1.0.7:
     resolution: {integrity: sha512-efJLHhLjIyKRewNS9EGZ4UpI8NguuL6fKkhRxVuMmrGV2xN/0APGdQYwLFky5w9naebSZ0OwAGp0G6/2Cg90rA==}

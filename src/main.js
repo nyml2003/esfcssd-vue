@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementPlus from 'element-plus'
-
+import { ElCollapseTransition } from 'element-plus'
+import Cookies from 'js-cookie'
+import '@/assets/css/global.css'
 import 'element-plus/theme-chalk/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
@@ -27,6 +29,7 @@ window.ResizeObserver = class ResizeObserver extends _ResizeObserver{
 }
 
 const app=createApp(App)
+app.config.globalProperties.$cookies = Cookies
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
