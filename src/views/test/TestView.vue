@@ -5,7 +5,8 @@
 </template>
 
 <script setup>
-import tableDisplay from '@/components/tableDisplay.vue';
+import tableDisplay from '@/components/tableDisplay.vue'
+
 </script>
 
 <style>

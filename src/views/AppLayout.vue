@@ -2,9 +2,9 @@
   <div>
     <!-- 头部区域 -->
     <div style="height: 60px; line-height: 60px; background-color: white; margin-bottom: 2px; display: flex">
-      <div style="width: 300px">
-        <img src="@/assets/image/icon.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
-        <span style="margin-left: 25px; font-size: 24px">图书管理系统</span>
+      <div style="width: 600px">
+        <img src="@/assets/image/logo.png" alt="" style="width: 80px; position: relative; top: 15px; left: 10px">
+        <span style="margin-left: 20px; font-size: 24px">残疾人就业保障金征收及使用监管系统</span>
       </div>
       <div style="flex: 1; text-align: right; padding-right: 20px">
         <el-dropdown size="medium">
@@ -25,6 +25,7 @@
           </el-dropdown>
 
         </el-dropdown>
+        <el-button type="danger"  @click="logout"><el-icon><SwitchButton /></el-icon>注销</el-button>
       </div>
     </div>
 
@@ -80,6 +81,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted,nextTick } from 'vue';
+import {ElMessageBox} from 'element-plus';
+import Cookies from 'js-cookie';
+import router from '@/router';
 const sideBar = ref(null);
 const isMouseInside = ref(false);
 
@@ -96,10 +100,23 @@ onMounted(() => {
   sideBar.value.addEventListener('mouseleave', handleMouseLeave);
 });
 
-onUnmounted(() => {
-  sideBar.value.removeEventListener('mouseenter', handleMouseEnter);
-  sideBar.value.removeEventListener('mouseleave', handleMouseLeave);
-});
+// onUnmounted(() => {
+//   sideBar.value.removeEventListener('mouseenter', handleMouseEnter);
+//   sideBar.value.removeEventListener('mouseleave', handleMouseLeave);
+// });
+const logout = () => {
+  ElMessageBox.confirm('确认退出吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  }).then(() => {
+    Cookies.remove('admin');
+    router.push('/login');
+  }).catch(() => {
+      // 处理用户点击“取消”按钮的情况
+    });
+
+};
 </script>
 
 <style scoped>

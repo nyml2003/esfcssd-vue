@@ -1,85 +1,126 @@
 <template>
-    <el-row style="align-items: center; justify-content: center; height:100% width:100%">
-    <el-form
-      label-position="top"
-      label-width="80px"
-      style="width: fit-content;"
+  <div style="height: 100vh; overflow: hidden; position: relative">
+    <el-card class="cover" v-if="loginAdmin.id">
+      <slide-verify
+        :l="42"
+        :r="10"
+        :w="310"
+        :h="155"
+        :accuracy="5"
+        slider-text="向右滑动"
+        @success="onSuccess"
+        @fail="onFail"
+        @refresh="onRefresh"
+      ></slide-verify>
+    </el-card>
+
+    <div
+      style="
+        width: 500px;
+        height: 400px;
+        background-color: white;
+        border-radius: 10px;
+        margin: 150px auto;
+        padding: 50px;
+      "
     >
-      <h2 class="login_title" >
-        残疾人就业保障金征收及使用监管系统</h2>
-        <el-form-item label="用户名">
-          <el-input v-model="nickname" placeholder="Nickname"></el-input>
-        </el-form-item>
-        <el-form-item label="密码">
-          <el-input  v-model="password" placeholder="Password"></el-input>
-        </el-form-item>
-        <el-form-item >
-          <el-col :span="24" style="text-align: center;">
-            <el-button circle plain type="info" @click="submit" size="large">→</el-button>
-          </el-col>
-        </el-form-item>
-     <div class="login_register">
-        <p>Don't have a account yet?</p>
-        <router-link to="/register" style="color:rgb(47,110,195);">Get started here</router-link> |
-        <router-link to="/config" style="color:rgb(47,110,195);" @click="setvisitor">visitor mode</router-link>
+      <div
+        style="
+          margin: 30px;
+          text-align: center;
+          font-size: 30px;
+          font-weight: bold;
+          color: dodgerblue;
+        "
+      >
+        登 录
       </div>
-      
-    </el-form>
-    </el-row>
-   
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue'
-  import DataService from '@/components/services/DataService'
-  import { ElNotification } from 'element-plus'
-  import { useStore} from 'vuex'
-  import router from '@/router'
-  const store=useStore()
-  const password=ref('')
-  const nickname = ref('')
-  const submit = async () => {
-    const response=await DataService.login(nickname.value,password.value)
-    console.log(response.data)
-    if (response.data.status.isRight === false) {
-      ElNotification({
-        title: '登录失败',
-        message: '用户名或密码错误',
-      })
-    } else {
-      store.commit("setUser",response.data.user)
-      console.log(store.state.user)
-      router.push({path:'/config'})
+      <el-form :model="admin" :rules="rules" ref="loginForm">
+        <el-form-item prop="username">
+          <el-input
+            placeholder="请输入账号"
+            size="large"
+            v-model="admin.usrName"
+          >
+            <template #prefix>
+              <el-icon>
+                <User />
+              </el-icon>
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+            placeholder="请输入密码"
+            show-password
+            size="large"
+            v-model="admin.passWd"
+          >
+            <template #prefix>
+              <el-icon>
+                <Lock />
+              </el-icon>
+            </template>
+          </el-input>
+        </el-form-item>
+        <div style="width: 100%; display: flex; justify-content: center">
+          <el-button size="large" type="primary" @click="login">登录</el-button>
+        </div>
+      </el-form>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import request from "@/utils/request";
+import Cookies from "js-cookie";
+import router from "@/router";
+
+const loginAdmin = ref({});
+const admin = ref({});
+const rules = {
+  usrName: [
+    { required: true, message: "请输入用户名", trigger: "blur" },
+    { min: 3, max: 10, message: "长度在3-10个字符", trigger: "blur" },
+  ],
+  passWd: [
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 3, max: 10, message: "长度在3-10个字符", trigger: "blur" },
+  ],
+};
+
+const loginForm = ref(null);
+
+const login = async () => {
+  loginForm.value.validate(async (valid) => {
+    if (valid) {
+      try {
+        const res = await request.post('/Admin/Login', admin.value)
+        console.log('login post')
+        console.log(res)
+        loginAdmin.value = res
+        Cookies.set('admin', JSON.stringify(loginAdmin.value))
+        console.log('onSuccess')
+        console.log(loginAdmin.value)
+        router.push('/')
+      } catch (error) {
+        console.error(error)
+      }
     }
-  
-  }
-  const setvisitor=()=>{
-    store.commit("setVisitor")
-  }
-  </script>
-  
-  <style scoped>
-  form {
-      background-color: #fff;
-      padding: 20px;
-      margin: 50px;
-      margin-top: 150px;
-      border-radius: 10px;
-      width: 600px !important;
-      border: 2px solid rgb(193, 186, 186);
-  }
-  .login_register{
-      font-family:  'San Francisco';
-      font-size: 10px;
-      color: rgb(150, 150, 150);
-      text-align: center;
-  }
-  .login_title {
-      font-size: 25px;
-      color: rgb(73, 73, 73);
-      font-family:  'San Francisco';
-      font-weight: 450;
-      text-align: center;
-      margin-bottom: 15px;
-  }
-  </style>
+  })
+}
+
+</script>
+
+<style>
+.cover {
+  width: fit-content;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+</style>

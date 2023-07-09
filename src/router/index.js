@@ -1,9 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import Cookies from 'js-cookie'
 const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/login/LogInView.vue')
+    component: () => import('../views/login/LoginView.vue')
   },
   {
     path: '/',
@@ -26,13 +27,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login') next()
-  const admin = Cookies.get("admin")
-  if (!admin && to.path !== '/login') return next("/login")  // 强制退回到登录页面
-  // 访问 /home 的时候，并且cookie里面存在数据，这个时候我就直接放行
-  next()
-})
+  if (to.path === '/login') {
+    next()
+  } else {
+    const admin = Cookies.get('admin')
+    if (!admin && to.path !== '/login') {
+      next('/login')
+    } else {
+      next()
+    }
 
+  }
+})
 // 路由配置...
 
 export default router

@@ -107,7 +107,7 @@
 <script setup>
 // import
 import { ref, onMounted, computed } from "vue"
-import DataService from "@/components/services/DataService"
+import request from "@/utils/request"
 import { ElMessageBox } from "element-plus"
 
 /*
@@ -117,16 +117,17 @@ import { ElMessageBox } from "element-plus"
 const loadData = async () => {
   commitQueryData.value["pageNum"] = currentPage.value
   commitQueryData.value["pageSize"] = recordsPerPage.value
-  const response = await DataService.searchCompanyStaff(commitQueryData.value)
+  const response = await request.post('/Staff/searchCompanyStaff',commitQueryData.value);
   console.log("loadData")
   console.log(response.data)
-  tableData.value = response.data.data.data
-  totalPages.value = response.data.data.total
-  recordsOnPage.value = response.data.data.data.length
+  tableData.value = response.data.data
+  totalPages.value = response.data.total
+  console.log(tableData.value)
+  recordsOnPage.value = tableData.value.length
   tableDataCopy = JSON.parse(JSON.stringify(tableData.value))
-  console.log(response.data.data.columns)
-  columns.value = response.data.data.columns.column
-  queryRules.value = response.data.data.columns.queryRule
+  console.log(response.data.columns)
+  columns.value = response.data.columns.column
+  queryRules.value = response.data.columns.queryRule
 }
 onMounted(() => {
   loadData()
@@ -188,7 +189,7 @@ const isDifferent = (index, row) => {
 }
 
 const handleNewRow = () => {
-  if (tableData.value.length === recordsPerPage.value) {
+  if (tableData.value.length === recordsOnPage.value) {
     tableData.value.push(columns.value.reduce((acc, column) => ({ ...acc, [column.prop]: '' }), {}));
   }
 }
@@ -208,13 +209,13 @@ const handleUpload = async (index, row) => {
     type: 'warning'
   }).then(async () => {
     if (index === recordsOnPage.value) {
-      await DataService.addCompanyStaff(row)
+      await request.post('/Staff/addCompanyStaff',row);
       setTimeout(() => {
         loadData()
       }, 200)
     } else {
       if (isDifferent(index, row)) {
-        await DataService.updateCompanyStaff(row)
+        await request.put('/Staff/updateCompanyStaff',row);
         setTimeout(() => {
           loadData()
         }, 200)
@@ -226,7 +227,7 @@ const handleUpload = async (index, row) => {
 }
 
 const handleInsert = async (row) => {
-  await DataService.insert(table.value, row)
+  
 }
 const handleDelete = async (index, row) => {
   if (index === recordsOnPage.value) {
@@ -237,7 +238,7 @@ const handleDelete = async (index, row) => {
       cancelButtonText: '取消',
       type: 'warning'
     }).then(async () => {
-      await DataService.deleteCompanyStaff(row["sid"], row["scompanyId"])
+      await request.delete('/Staff/deleteCompanyStaff/'+row["scompanyId"]+'/'+row["sid"]);
       setTimeout(() => {
         loadData()
       }, 200)
@@ -254,7 +255,7 @@ const handleQuery = async (row) => {
 }
 const handleGetId = async (index) => {
   const table = columns.value[index].foreign
-  const response = await DataService.getId(table)
+  const response = await request.get('/Staff/getId/'+table);
   const id = response.data.id
   columns.value[index].options = []
   for (let i = 0; i < id.length; i++) {
@@ -349,3 +350,28 @@ const queryModeConfig = {
 }
 </style>
   
+
+
+<!-- export default {
+  hello(){
+    return apiClient.get('/Staff/hello')
+  },
+  searchCompanyStaff(queryData){
+    return apiClient.post('/Staff/searchCompanyStaff',queryData);
+  },
+  addCompanyStaff(staff){
+    console.log(staff)
+    return apiClient.post('/Staff/addCompanyStaff',staff);
+  },
+  updateCompanyStaff(staff){
+    console.log("updateCompanyStaff")
+    return apiClient.put('/Staff/updateCompanyStaff',staff);
+  },
+  deleteCompanyStaff(staffId,companyId){
+    console.log("deleteCompanyStaff")
+    console.log(staffId)
+    console.log(companyId)
+    return apiClient.delete('/Staff/deleteCompanyStaff/'+companyId+'/'+staffId);
+  }
+  
+} -->
