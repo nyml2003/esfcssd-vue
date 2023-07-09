@@ -36,8 +36,13 @@
       <div ref="sideBar"
       class="sidebar"
         >
+        <el-button class="lock" circle @click="toggleSidebar" :type="isMenuExpanded ? 'primary' : 'info'" size="large">
+          
+          <Pushpin  v-if="isMenuExpanded" theme="filled" size="24" fill="#409eff" :strokeWidth="1"/>
+          <Pushpin  v-else theme="filled" size="24" fill="#fff" :strokeWidth="1"/>
+        </el-button>
         <el-menu :default-active="$route.path" router class="el-menu-demo" style="margin-bottom: 10px"
-          :collapse="!isMouseInside">
+          :collapse="!(isMenuExpanded || isMouseInside)">
           <el-menu-item index="/">
             <el-icon>
               <House />
@@ -84,17 +89,35 @@ import { ref, onMounted, onUnmounted,nextTick } from 'vue';
 import {ElMessageBox} from 'element-plus';
 import Cookies from 'js-cookie';
 import router from '@/router';
+import {Pushpin} from '@icon-park/vue-next';
 const sideBar = ref(null);
 const isMouseInside = ref(false);
-
+const isMenuExpanded = ref(false);
 const handleMouseEnter = () => {
+  if (isMenuExpanded.value) {
+    return;
+  }
   isMouseInside.value = true;
 };
 
 const handleMouseLeave = () => {
+  if (isMenuExpanded.value) {
+    return;
+  }
   isMouseInside.value = false;
 };
-
+const toggleSidebar=()=>{
+    isMenuExpanded.value = !isMenuExpanded.value;
+    const sidebar = document.querySelector('.sidebar');
+    if (isMenuExpanded.value) {
+      sidebar.classList.remove('collapse');
+      sidebar.classList.add('expanded');
+    }else{
+      sidebar.classList.remove('expanded');
+      sidebar.classList.add('collapse');
+    }
+    
+}
 onMounted(() => {
   sideBar.value.addEventListener('mouseenter', handleMouseEnter);
   sideBar.value.addEventListener('mouseleave', handleMouseLeave);
@@ -121,6 +144,9 @@ const logout = () => {
 
 <style scoped>
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 64px;
   min-height: calc(100vh - 62px);
   overflow: hidden;
@@ -128,10 +154,20 @@ const logout = () => {
   background-color: white;
   transition: width 0.3s ease-in-out;
 }
-
 .sidebar:hover {
   width: 200px;
 }
+.expanded {
+  width: 200px;
+}
+.collapse {
+  width: 64px;
+}
+
+.lock{
+  top:10px;
+}
+
 .el-menu {
   border-right: none;
   text-decoration: none;
