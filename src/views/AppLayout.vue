@@ -36,10 +36,10 @@
       <div ref="sideBar"
       class="sidebar"
         >
-        <el-button class="lock" circle @click="toggleSidebar" :type="isMenuExpanded ? 'primary' : 'info'" size="large">
+        <el-button class="lock" circle @click="toggleSidebar"  size="large">
           
           <Pushpin  v-if="isMenuExpanded" theme="filled" size="24" fill="#409eff" :strokeWidth="1"/>
-          <Pushpin  v-else theme="filled" size="24" fill="#fff" :strokeWidth="1"/>
+          <Pushpin  v-else theme="filled" size="24" fill="#dbe0e2" :strokeWidth="1"/>
         </el-button>
         <el-menu :default-active="$route.path" router class="el-menu-demo" style="margin-bottom: 10px"
           :collapse="!(isMenuExpanded || isMouseInside)">
@@ -166,6 +166,14 @@ const logout = () => {
 
 .lock{
   top:10px;
+  background:#fff;
+  border-color:#cbcbcd;
+  color:#505255;
+}
+.lock:hover{
+  background:#ecf5ff;
+  border-color:#c6e2ff;
+  color:#409eff;
 }
 
 .el-menu {
