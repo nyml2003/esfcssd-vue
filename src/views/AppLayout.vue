@@ -170,7 +170,6 @@ const toggleSidebar = () => {
     sidebar.classList.remove('expanded');
     sidebar.classList.add('collapse');
   }
-
 }
 onMounted(() => {
   sideBar.value.addEventListener('mouseenter', handleMouseEnter);
@@ -192,7 +191,6 @@ const logout = () => {
   }).catch(() => {
     // 处理用户点击“取消”按钮的情况
   });
-
 };
 </script>
 

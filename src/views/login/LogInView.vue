@@ -78,7 +78,10 @@ import Cookies from "js-cookie";
 import router from "@/router";
 import SlideVerify from 'vue3-slide-verify';
 const loginAdmin = ref({});
-const admin = ref({});
+const admin = ref({
+  usrName: "admin",
+  passWd: "admin",
+});
 const rules = {
   usrName: [
     { required: true, message: "请输入用户名", trigger: "blur" },
