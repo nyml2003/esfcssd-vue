@@ -97,7 +97,7 @@
   </div>
   <div style="display: flex; align-items: center; flex-direction: column;">
     <div style="margin-top: 20px ">
-    <el-pagination layout="prev, pager, next" :total="totalPages" :page-size="recordsPerPage" background
+    <el-pagination layout="prev, pager, next" :total="total" :page-size="recordsPerPage" background
       @current-change="handleCurrentChange"></el-pagination>
   </div>
   </div>
@@ -120,14 +120,15 @@ const loadData = async () => {
   const response = await request.post('/Staff/searchCompanyStaff',commitQueryData.value);
   console.log("loadData")
   console.log(response.data)
+  console.log(response)
   tableData.value = response.data.data
-  totalPages.value = response.data.total
+  total.value = response.data.total
   console.log(tableData.value)
   recordsOnPage.value = tableData.value.length
   tableDataCopy = JSON.parse(JSON.stringify(tableData.value))
-  console.log(response.data.columns)
-  columns.value = response.data.columns.column
-  queryRules.value = response.data.columns.queryRule
+  const column=require('@/assets/json/' + table.value + '.json')
+  columns.value=column.column
+  queryRules.value = column.queryRule
 }
 onMounted(() => {
   loadData()
@@ -158,14 +159,14 @@ const table = ref("Staff")
 
 //加载数据
 /*
-  currentPage: 当前页码
-  recordsPerPage: 每页的最大记录数
-  totalPages: 总页数
+  currentPage: 当前页码, 从1开始
+  recordsPerPage: 每页的最大记录数，暂定为9
+  total: 总记录数
   recordsOnPage: 当前页的记录数
 */
 const currentPage = ref(1)
 const recordsPerPage = ref(9)
-const totalPages = ref(0)
+const total = ref(0)
 const recordsOnPage = ref(0)
 const handleCurrentChange = (page) => {
   currentPage.value = page

@@ -76,7 +76,7 @@ import { ref } from "vue";
 import request from "@/utils/request";
 import Cookies from "js-cookie";
 import router from "@/router";
-
+import SlideVerify from 'vue3-slide-verify';
 const loginAdmin = ref({});
 const admin = ref({});
 const rules = {
@@ -96,7 +96,7 @@ const login = async () => {
   loginForm.value.validate(async (valid) => {
     if (valid) {
       try {
-        const res = await request.post('/Admin/Login', admin.value)
+        const res = await request.post('/User/Login', admin.value)
         console.log('login post')
         console.log(res)
         loginAdmin.value = res

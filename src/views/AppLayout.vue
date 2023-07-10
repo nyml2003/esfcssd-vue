@@ -1,77 +1,119 @@
 <template>
-  <div>
+  <div style="user-select: none;">
     <!-- 头部区域 -->
-    <div style="height: 60px; line-height: 60px; background-color: white; margin-bottom: 2px; display: flex">
+    <div style="height: 60px; line-height: 60px; background-color: white; margin-bottom: 2px; display: flex ">
       <div style="width: 600px">
         <img src="@/assets/image/logo.png" alt="" style="width: 80px; position: relative; top: 15px; left: 10px">
         <span style="margin-left: 20px; font-size: 24px">残疾人就业保障金征收及使用监管系统</span>
       </div>
       <div style="flex: 1; text-align: right; padding-right: 20px">
-        <el-dropdown size="medium">
-          <span class="el-dropdown-link" style="cursor: pointer">
-            username<i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown>
-            <span class="el-dropdown-link" style="cursor: pointer">
-              username<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <template v-slot:dropdown>
-              <el-dropdown-menu style="margin-top: -5px">
-                <el-dropdown-item>
-                  <div style="width: 50px; text-align: center;">退出</div>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-
-        </el-dropdown>
-        <el-button type="danger"  @click="logout"><el-icon><SwitchButton /></el-icon>注销</el-button>
+        
+        <el-button type="danger" @click="logout"><el-icon>
+            <SwitchButton />
+          </el-icon>注销</el-button>
       </div>
     </div>
 
     <!-- 侧边栏和主体 -->
     <div style="display: flex">
-      
+
       <!-- 侧边栏导航 -->
-      <div ref="sideBar"
-      class="sidebar"
-        >
-        <el-button class="lock" circle @click="toggleSidebar"  size="large">
-          
-          <Pushpin  v-if="isMenuExpanded" theme="filled" size="24" fill="#409eff" :strokeWidth="1"/>
-          <Pushpin  v-else theme="filled" size="24" fill="#dbe0e2" :strokeWidth="1"/>
+      <div ref="sideBar" class="sidebar">
+        <el-button class="lock" circle @click="toggleSidebar" size="large">
+
+          <Pushpin v-if="isMenuExpanded" theme="filled" size="24" fill="#409eff" :strokeWidth="1" />
+          <Pushpin v-else theme="filled" size="24" fill="#dbe0e2" :strokeWidth="1" />
         </el-button>
         <el-menu :default-active="$route.path" router class="el-menu-demo" style="margin-bottom: 10px"
-          :collapse="!(isMenuExpanded || isMouseInside)">
+          :collapse="!(isMenuExpanded || isMouseInside)" >
           <el-menu-item index="/">
-            <el-icon>
-              <House />
-            </el-icon>
-            <span>首页</span>
+            <template #title>
+              <span>首页</span>
+            </template>
+            <template #>
+              <HomeTwo theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
           </el-menu-item>
-
-          <el-menu-item index="office">
-            <el-icon>
-              <OfficeBuilding />
-            </el-icon>
-            <span>单位</span>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <el-icon><User /></el-icon>
-            <span>职工</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <el-icon><Money /></el-icon>
-            <span>征收</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <el-icon><DataAnalysis /></el-icon>
-            <span>统计</span>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <el-icon><Printer /></el-icon>
-            <span>打印</span>
-          </el-menu-item>
+            <el-menu-item index="/enterpriseInfo/unitInfo" v-if="role == 'enterprise'">
+              <template #title>
+                <span>单位信息</span>
+              </template>
+              <template #>
+                <BuildingOne theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/enterpriseInfo/employeeInfo" v-if="role == 'enterprise'">
+              <template #title>
+                <span>员工信息</span>
+              </template>
+              <template #>
+                <User theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/enterpriseInfo/applicationRecord" v-if="role == 'enterprise'">
+              <template #title>
+                <span>已申请记录</span>
+              </template>
+              <template #>
+                <ListAdd theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/enterpriseInfo/disabilityAllowanceReceivable" v-if="role == 'enterprise'">
+              <template #title>
+                <span>残保金待收信息</span>
+              </template>
+              <template #>
+                <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/leader/collection-info" v-if="role == 'leader'">
+                <template #title>
+                  <span>代扣信息</span>
+                </template>
+                <template #>
+                  <Income theme="filled" size="24" fill="#333" :strokeWidth="1"/>
+                </template>
+              </el-menu-item>
+              <el-menu-item index="/leader/withholding-info" v-if="role == 'leader'">
+                <template #title>
+                  <span>代收信息</span>
+                </template>
+                <template #>
+                  <IncomeOne theme="filled" size="24" fill="#333" :strokeWidth="1"/>
+                </template>
+              </el-menu-item>
+            <el-menu-item index="/leader/collection"  v-if="role == 'leader'">
+              <template #title>
+                <span>使用信息</span>
+              </template>
+              <template #>
+                <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/leader/usage-info" v-if="role == 'leader'">
+              <template #title>
+                <span>帐号信息</span>
+              </template>
+              <template #>
+                <BuildingOne theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/admin/pending-applications" v-if="role == 'admin' ">
+              <template #title>
+                <span>未处理申请记录</span>
+              </template>
+              <template #>
+                <ListAdd theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/admin/all-applications" v-if=" role== 'admin' ">
+              <template #title>
+                <span>所有申请记录</span>
+              </template>
+              <template #>
+                <ListAdd theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
         </el-menu>
       </div>
 
@@ -85,14 +127,26 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted,nextTick } from 'vue';
-import {ElMessageBox} from 'element-plus';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { ElMessageBox } from 'element-plus';
 import Cookies from 'js-cookie';
 import router from '@/router';
-import {Pushpin} from '@icon-park/vue-next';
+import {
+  User,
+  Lock,
+  SwitchButton,
+  HomeTwo,
+  BuildingOne,
+  ListAdd,
+  Wallet,
+  Income,
+  IncomeOne,
+  Pushpin
+} from '@icon-park/vue-next';
 const sideBar = ref(null);
 const isMouseInside = ref(false);
 const isMenuExpanded = ref(false);
+const role = ref('enterprise')
 const handleMouseEnter = () => {
   if (isMenuExpanded.value) {
     return;
@@ -106,17 +160,17 @@ const handleMouseLeave = () => {
   }
   isMouseInside.value = false;
 };
-const toggleSidebar=()=>{
-    isMenuExpanded.value = !isMenuExpanded.value;
-    const sidebar = document.querySelector('.sidebar');
-    if (isMenuExpanded.value) {
-      sidebar.classList.remove('collapse');
-      sidebar.classList.add('expanded');
-    }else{
-      sidebar.classList.remove('expanded');
-      sidebar.classList.add('collapse');
-    }
-    
+const toggleSidebar = () => {
+  isMenuExpanded.value = !isMenuExpanded.value;
+  const sidebar = document.querySelector('.sidebar');
+  if (isMenuExpanded.value) {
+    sidebar.classList.remove('collapse');
+    sidebar.classList.add('expanded');
+  } else {
+    sidebar.classList.remove('expanded');
+    sidebar.classList.add('collapse');
+  }
+
 }
 onMounted(() => {
   sideBar.value.addEventListener('mouseenter', handleMouseEnter);
@@ -136,8 +190,8 @@ const logout = () => {
     Cookies.remove('admin');
     router.push('/login');
   }).catch(() => {
-      // 处理用户点击“取消”按钮的情况
-    });
+    // 处理用户点击“取消”按钮的情况
+  });
 
 };
 </script>
@@ -154,32 +208,34 @@ const logout = () => {
   background-color: white;
   transition: width 0.3s ease-in-out;
 }
+
 .sidebar:hover {
   width: 200px;
 }
+
 .expanded {
   width: 200px;
 }
+
 .collapse {
   width: 64px;
 }
 
-.lock{
-  top:10px;
-  background:#fff;
-  border-color:#cbcbcd;
-  color:#505255;
+.lock {
+  top: 10px;
+  background: #fff;
+  border-color: #cbcbcd;
+  color: #505255;
 }
-.lock:hover{
-  background:#ecf5ff;
-  border-color:#c6e2ff;
-  color:#409eff;
+
+.lock:hover {
+  background: #ecf5ff;
+  border-color: #c6e2ff;
+  color: #409eff;
 }
 
 .el-menu {
   border-right: none;
   text-decoration: none;
 }
-
-
 </style>

@@ -35,6 +35,9 @@ dependencies:
   vue-router:
     specifier: ^4.2.4
     version: 4.2.4(vue@3.2.36)
+  vue3-slide-verify:
+    specifier: ^1.1.4
+    version: 1.1.4
   vuex:
     specifier: ^4.1.0
     version: 4.1.0(vue@3.2.36)
@@ -7342,6 +7345,12 @@ packages:
   /vue-template-es2015-compiler@1.9.1:
     resolution: {integrity: sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==}
     dev: true
+
+  /vue3-slide-verify@1.1.4:
+    resolution: {integrity: sha512-er2d9TSPsF5CcmoxBfP6eSkc4IHROwXu6Ytghkwf52apXpXy2ZtW3tOgHnmFWb3GHESKxZ9bsFXqSX+fJ6hjrg==}
+    dependencies:
+      vue: 3.2.36
+    dev: false
 
   /vue@2.7.14:
     resolution: {integrity: sha512-b2qkFyOM0kwqWFuQmgd4o+uHGU7T+2z3T+WQp8UBjADfEv2n4FEMffzBmCKNP0IGzOEEfYjvtcC62xaSKeQDrQ==}

@@ -3,13 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementPlus from 'element-plus'
-import { ElCollapseTransition } from 'element-plus'
 import Cookies from 'js-cookie'
 import '@/assets/css/global.css'
 import 'element-plus/theme-chalk/index.css'
 import '@icon-park/vue-next/styles/index.css';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
 const debounce = (fn, delay) => {
   let timer = null;
   return function () {
