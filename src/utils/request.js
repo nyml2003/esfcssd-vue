@@ -6,7 +6,7 @@ import router from '@/router'
 // 创建一个 axios 实例，用于发送请求
 const request = axios.create({
   // 设置后端 API 的基础 URL
-  baseURL: "http://localhost:60000",
+  baseURL: "http://localhost:8090",
   // 设置请求头
   headers: {
     Accept: "application/json",
