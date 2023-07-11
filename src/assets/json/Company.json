@@ -1,0 +1,29 @@
+{
+    "column":[
+        {
+            "prop":"caddress",
+            "label":"地址",
+            "type":"input"
+        },
+        {
+            "prop":"cid",
+            "label":"id",
+            "type":"input"
+        },
+        {
+            "prop":"cname",
+            "label":"名称",
+            "type":"input"
+        },
+        {
+            "prop":"cregion",
+            "label":"区域",
+            "type":"input"
+        },
+        {
+            "prop":"csocialCreditCode",
+            "label":"社会信用代码",
+            "type":"input"
+        }
+    ]
+}

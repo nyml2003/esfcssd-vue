@@ -38,14 +38,19 @@ request.interceptors.response.use(
       if (typeof res === 'string') {
           res = res ? JSON.parse(res) : res
       }
-      if (res.code === '401') {
+      if (res.code === 401) {
           router.push('/login')
       }
       return res;
   },
   error => {
+    if (error.response && error.response.status === 401) {
+      // 处理状态码为401的错误
+      router.push('/login')
+  } else {
       console.log('err' + error) // for debug
-      return Promise.reject(error)
+  }
+  return Promise.reject(error)
   }
 )
 // 定义一个用于获取数据的函数

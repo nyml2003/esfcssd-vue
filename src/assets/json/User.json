@@ -1,0 +1,29 @@
+{
+    "column":[
+        {
+            "prop":"usrId",
+            "label":"用户ID",
+            "type":"input"
+        },
+        {
+            "prop":"usrName",
+            "label":"用户名",
+            "type":"input"
+        },
+        {
+            "prop":"usrPasswd",
+            "label":"密码",
+            "type":"input"
+        },
+        {
+            "prop":"usrClass",
+            "label":"用户类别",
+            "type":"input"
+        },
+        {
+            "prop":"usrPermission",
+            "label":"用户权限",
+            "type":"input"
+        }
+    ]
+}

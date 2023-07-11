@@ -1,0 +1,24 @@
+{
+    "column":[
+        {
+            "prop":"aid",
+            "label":"账户ID",
+            "type":"input"
+        },
+        {
+            "prop":"abankcard",
+            "label":"银行卡号",
+            "type":"input"
+        },
+        {
+            "prop":"abalance",
+            "label":"账户余额",
+            "type":"input"
+        },
+        {
+            "prop":"alastupdate",
+            "label":"最后更新时间",
+            "type":"input"
+        } 
+    ]
+}

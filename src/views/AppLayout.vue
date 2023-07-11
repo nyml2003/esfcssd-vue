@@ -6,6 +6,11 @@
         <img src="@/assets/image/logo.png" alt="" style="width: 80px; position: relative; top: 15px; left: 10px">
         <span style="margin-left: 20px; font-size: 24px">残疾人就业保障金征收及使用监管系统</span>
       </div>
+      <el-select v-model="role">
+        <el-option label="单位" value="enterprise"></el-option>
+        <el-option label="领导" value="leader"></el-option>
+        <el-option label="管理员" value="admin"></el-option>
+      </el-select>
       <div style="flex: 1; text-align: right; padding-right: 20px">
         
         <el-button type="danger" @click="logout"><el-icon>
@@ -34,7 +39,7 @@
               <HomeTwo theme="filled" size="24" fill="#333" :strokeWidth="1" />
             </template>
           </el-menu-item>
-            <el-menu-item index="/enterpriseInfo/unitInfo" v-if="role == 'enterprise'">
+            <el-menu-item index="/enterprise/UnitInfo" v-if="role == 'enterprise'">
               <template #title>
                 <span>单位信息</span>
               </template>
@@ -42,7 +47,7 @@
                 <BuildingOne theme="filled" size="24" fill="#333" :strokeWidth="1" />
               </template>
             </el-menu-item>
-            <el-menu-item index="/enterpriseInfo/employeeInfo" v-if="role == 'enterprise'">
+            <el-menu-item index="/enterprise/EmployeeInfo" v-if="role == 'enterprise'">
               <template #title>
                 <span>员工信息</span>
               </template>
@@ -90,7 +95,7 @@
                 <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
               </template>
             </el-menu-item>
-            <el-menu-item index="/leader/usage-info" v-if="role == 'leader'">
+            <el-menu-item index="/leader/account" v-if="role == 'leader'">
               <template #title>
                 <span>帐号信息</span>
               </template>
@@ -114,6 +119,87 @@
                 <ListAdd theme="filled" size="24" fill="#333" :strokeWidth="1" />
               </template>
             </el-menu-item>
+            <el-menu-item index="/admin/account" v-if="role == 'admin' ">
+              <template #title>
+                <span>帐号信息</span>
+              </template>
+              <template #>
+                <BuildingOne theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/admin/collectbill" v-if="role == 'admin' ">
+              <template #title>
+                <span>代收信息</span>
+              </template>
+              <template #>
+                <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
+              </template>
+            </el-menu-item>
+          <el-menu-item index="/admin/company" v-if="role == 'admin'">
+            <template #title>
+              <span>单位信息</span>
+            </template>
+            <template #>
+              <BuildingOne theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/admin/dpfederation" v-if="role == 'admin'">
+            <template #title>
+              <span>残联信息</span>
+            </template>
+            <template #>
+              <BuildingOne theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/admin/expensebill" v-if="role == 'admin'">
+            <template #title>
+              <span>使用信息</span>
+            </template>
+            <template #>
+              <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/admin/financial" v-if="role == 'admin'">
+            <template #title>
+              <span>财务信息</span>
+            </template>
+            <template #>
+              <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/admin/staff" v-if="role == 'admin'">
+            <template #title>
+              <span>员工信息</span>
+            </template>
+            <template #>
+              <User theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/admin/staffapplicationrecord" v-if="role == 'admin'">
+            <template #title>
+              <span>已申请记录</span>
+            </template>
+            <template #>
+              <ListAdd theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/admin/user" v-if="role == 'admin'">
+            <template #title>
+              <span>用户信息</span>
+            </template>
+            <template #>
+              <User theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/admin/withheldbill" v-if="role == 'admin'">
+            <template #title>
+              <span>代扣信息</span>
+            </template>
+            <template #>
+              <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
+            </template>
+          </el-menu-item>
+          
         </el-menu>
       </div>
 
@@ -126,7 +212,10 @@
   </div>
 </template>
 
+
+
 <script setup>
+
 import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { ElMessageBox } from 'element-plus';
 import Cookies from 'js-cookie';
@@ -146,7 +235,7 @@ import {
 const sideBar = ref(null);
 const isMouseInside = ref(false);
 const isMenuExpanded = ref(false);
-const role = ref('enterprise')
+const role = ref('admin')
 const handleMouseEnter = () => {
   if (isMenuExpanded.value) {
     return;

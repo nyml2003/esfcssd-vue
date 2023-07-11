@@ -3,73 +3,61 @@
       {
         "prop": "sid",
         "label": "职工ID",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "sname",
         "label": "名字",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "ssex",
         "label": "性别",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "sidNum",
         "label": "身份证号",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "sphone",
         "label": "电话",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "scompanyId",
         "label": "从属公司",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "sdisabled",
         "label": "身体状况",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "saddress",
         "label": "地址",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "seduBackground",
         "label": "教育背景",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "sposition",
         "label": "职位",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "shireDate",
         "label": "雇佣日期",
-        "width": "100",
         "type": "input"
       },
       {
         "prop": "ssalary",
         "label": "工资",
-        "width": "100",
         "type": "input"
       }
     ],

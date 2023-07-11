@@ -1,0 +1,31 @@
+
+
+{
+    "column":[
+        {
+            "prop":"wbid",
+            "label":"流水号",
+            "type":"input"
+        },
+        {
+            "prop":"wbaccountid",
+            "label":"账户ID",
+            "type":"input"
+        },
+        {
+            "prop":"wbamount",
+            "label":"金额",
+            "type":"input"
+        },
+        {
+            "prop":"wbfinancialid",
+            "label":"财务ID",
+            "type":"input"
+        },
+        {
+            "prop":"wbtime",
+            "label":"时间",
+            "type":"input"
+        }
+    ]
+}

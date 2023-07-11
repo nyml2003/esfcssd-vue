@@ -106,7 +106,7 @@
   
 <script setup>
 // import
-import { ref, onMounted, computed } from "vue"
+import { ref, onMounted, computed,inject } from "vue"
 import request from "@/utils/request"
 import { ElMessageBox } from "element-plus"
 
@@ -117,18 +117,21 @@ import { ElMessageBox } from "element-plus"
 const loadData = async () => {
   commitQueryData.value["pageNum"] = currentPage.value
   commitQueryData.value["pageSize"] = recordsPerPage.value
-  const response = await request.post('/Staff/searchCompanyStaff',commitQueryData.value);
-  console.log("loadData")
-  console.log(response.data)
-  console.log(response)
-  tableData.value = response.data.data
-  total.value = response.data.total
-  console.log(tableData.value)
-  recordsOnPage.value = tableData.value.length
-  tableDataCopy = JSON.parse(JSON.stringify(tableData.value))
-  const column=require('@/assets/json/' + table.value + '.json')
-  columns.value=column.column
-  queryRules.value = column.queryRule
+  await request.post('/' + table.value + '/search' + table.value, commitQueryData.value).then((response) => {
+    console.log("loadData")
+    console.log(response.data)
+    console.log(response)
+    tableData.value = response.data.list
+    total.value = response.data.total
+    console.log(tableData.value)
+    recordsOnPage.value = tableData.value.length
+    tableDataCopy = JSON.parse(JSON.stringify(tableData.value))
+    const column = require('@/assets/json/' + table.value + '.json')
+    columns.value = column.column
+    queryRules.value = column.queryRule
+  }).catch((err) => {
+    console.log(err)
+  })
 }
 onMounted(() => {
   loadData()
@@ -155,7 +158,7 @@ let rowCopy = []
 const columns = ref([])
 
 //表名，由路由传入
-const table = ref("Staff")
+const table = ref(inject('table'))
 
 //加载数据
 /*
@@ -210,13 +213,13 @@ const handleUpload = async (index, row) => {
     type: 'warning'
   }).then(async () => {
     if (index === recordsOnPage.value) {
-      await request.post('/Staff/addCompanyStaff',row);
+      await request.post('/'+table.value+'/add'+table.value,row)
       setTimeout(() => {
         loadData()
       }, 200)
     } else {
       if (isDifferent(index, row)) {
-        await request.put('/Staff/updateCompanyStaff',row);
+        await request.put('/'+table.value+'/update'+table.value,row);
         setTimeout(() => {
           loadData()
         }, 200)
@@ -239,7 +242,7 @@ const handleDelete = async (index, row) => {
       cancelButtonText: '取消',
       type: 'warning'
     }).then(async () => {
-      await request.delete('/Staff/deleteCompanyStaff/'+row["scompanyId"]+'/'+row["sid"]);
+      await request.delete('/'+table.value+'/delete'+table.value+'/'+row["cID"]);
       setTimeout(() => {
         loadData()
       }, 200)
@@ -351,28 +354,3 @@ const queryModeConfig = {
 }
 </style>
   
-
-
-<!-- export default {
-  hello(){
-    return apiClient.get('/Staff/hello')
-  },
-  searchCompanyStaff(queryData){
-    return apiClient.post('/Staff/searchCompanyStaff',queryData);
-  },
-  addCompanyStaff(staff){
-    console.log(staff)
-    return apiClient.post('/Staff/addCompanyStaff',staff);
-  },
-  updateCompanyStaff(staff){
-    console.log("updateCompanyStaff")
-    return apiClient.put('/Staff/updateCompanyStaff',staff);
-  },
-  deleteCompanyStaff(staffId,companyId){
-    console.log("deleteCompanyStaff")
-    console.log(staffId)
-    console.log(companyId)
-    return apiClient.delete('/Staff/deleteCompanyStaff/'+companyId+'/'+staffId);
-  }
-  
-} -->

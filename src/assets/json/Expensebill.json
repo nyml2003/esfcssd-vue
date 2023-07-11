@@ -1,0 +1,35 @@
+{
+    "column":[
+        {
+            "prop":"ebID",
+            "label":"ID",
+            "type":"input"
+        },
+        {
+            "prop":"ebAccountID",
+            "label":"Account ID",
+            "type":"input"
+        },
+        {
+            "prop":"ebFinancialID",
+            "label":"Financial ID",
+            "type":"input"
+        },
+        {
+            "prop":"ebAmount",
+            "label":"Amount",
+            "type":"input"
+        },
+        {
+            "prop":"ebTime",
+            "label":"Time",
+            "type":"input"
+        },
+        {
+            "prop":"ebObject",
+            "label":"Object",
+            "type":"input"
+        }
+
+    ]
+}

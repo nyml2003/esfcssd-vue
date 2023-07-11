@@ -18,8 +18,8 @@ const routes = [
         component: () => import("@/views/home/HomeView.vue"),
       },
       {
-        path: "/enterpriseInfo",
-        name: "EnterpriseInfo",
+        path: "/enterprise",
+        name: "Enterprise",
         component: () => import("@/views/enterprise/EnterpriseInfoView.vue"),
         children: [
           {
@@ -45,10 +45,79 @@ const routes = [
           },
         ],
       },
+      {
+        path:"/leader",
+        name:"Leader",
+        component: () => import("@/views/leader/LeaderView.vue"),
+        children:[
+          {
+            path:'account',
+            name:'Account',
+            component: () => import("@/views/leader/AccountView.vue"),
+          }
+        ]
+      },
+      {
+        path: "/admin",
+        name: "Admin",
+        component: () => import("@/views/admin/AdminView.vue"),
+        children:[
+          {
+            path:'account',
+            name:'Account',
+            component: () => import("@/views/admin/AccountView.vue"),
+          },
+          {
+            path:'collectbill',
+            name:'CollectBill',
+            component: () => import("@/views/admin/CollectBillView.vue"),
+          },
+          {
+            path:'company',
+            name:'Company',
+            component: () => import("@/views/admin/CompanyView.vue"),
+          },
+          {
+            path:'dpfederation',
+            name:'DpFederation',
+            component: () => import("@/views/admin/DpFederationView.vue"),
+          },
+          {
+            path:'expensebill',
+            name:'ExpenseBill',
+            component: () => import("@/views/admin/ExpenseBillView.vue"),
+          },
+          {
+            path:'financial',
+            name:'Financial',
+            component: () => import("@/views/admin/FinancialView.vue"),
+          },
+          {
+            path:'staff',
+            name:'Staff',
+            component: () => import("@/views/admin/StaffView.vue"),
+          },
+          {
+            path:'staffapplicationrecord',
+            name:'StaffApplicationRecord',
+            component: () => import("@/views/admin/StaffApplicationRecordView.vue"),
+          },
+          {
+            path:'user',
+            name:'User',
+            component: () => import("@/views/admin/UserView.vue"),
+          },
+          {
+            path:'withheldbill',
+            name:'WithheldBill',
+            component: () => import("@/views/admin/WithheldBillView.vue"),
+          }
+        ]
+      }
     ],
   },
 ];
-
+//account collectbill company dpfederation expensebill financial staff staffapplicationrecord user withheldbill
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
