@@ -10,4 +10,8 @@ import Cookies from "js-cookie";
 provide('table', 'Staff');
 provide('id',JSON.parse(Cookies.get('admin')).usrPermission)
 provide('idName','companyId')
+provide('pkid','sid')
+provide('isOperation',true)
+provide('isDisabled',false)
+provide('viewMode','edit')
 </script>

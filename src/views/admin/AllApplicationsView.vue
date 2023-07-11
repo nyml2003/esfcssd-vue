@@ -5,13 +5,13 @@
 </template>
 <script setup>
 import tableDisplay from '@/components/tableDisplay.vue';
-import { provide } from 'vue';
-import Cookies from "js-cookie";
+import { provide,ref,onMounted } from 'vue';
+import request from '@/utils/request'
 provide('table', 'Staffapplicationrecord');
-provide('id',JSON.parse(Cookies.get('admin')).usrPermission)
-provide('idName','sarCompanyID')
-provide('pkid','sarID')
-provide('isOperation',false)
+provide('idName','sarid')
+provide('isOperation',true)
 provide('isDisabled',true)
+provide('isShow',true)
 provide('viewMode','view')
+provide('pkid','sarid')
 </script>

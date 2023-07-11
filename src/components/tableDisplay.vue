@@ -11,7 +11,7 @@
       </el-form-item>
     </el-form>
   </el-dialog>
-  <el-dialog v-model="isDialogVisible" draggable title="编辑" style="max-width: fit-content; " center show-close
+  <!-- <el-dialog v-model="isDialogVisible" draggable title="编辑" style="max-width: fit-content; " center show-close
     :top="'5vh'" label-position="right">
     <el-form label-width="120px">
       <el-form-item v-for="index in columns.length" :key="index" :label="columns[index - 1].label">
@@ -28,16 +28,16 @@
         <el-text v-else type="info">{{ rowRaw[columns[index - 1].prop] }}</el-text>
       </el-form-item>
     </el-form>
-  </el-dialog>
+  </el-dialog> -->
   <div>
     <div style="margin-bottom: 20px">
-      <el-button size="large" :type="viewModeConfig[viewMode].button" @click="handleSwitchView">
+      <el-button size="large" :type="viewModeConfig" @click="handleSwitchView">
         <el-icon>
           <View />
         </el-icon>
         {{ viewMode }}
       </el-button>
-      <el-button size="large" @click="handleNewRow">
+      <el-button size="large" @click="handleNewRow" v-if="viewMode == 'edit'">
         <el-icon>
           <Plus />
         </el-icon>
@@ -63,8 +63,8 @@
       <el-table-column v-for="index in columns.length" :key="index" :label="columns[index - 1].label"
          align="center">
         <template #default="scope">
-          <el-input v-if="viewMode == 'view'" type="info" v-model="scope.row[columns[index - 1].prop]"></el-input>
-          <el-input v-else-if="columns[index - 1].type == 'input'" v-model="scope.row[columns[index - 1].prop]" />
+          <el-input v-if="viewMode == 'view'" type="info" v-model="scope.row[columns[index - 1].prop]" :disabled="isDisabled"></el-input>
+          <el-input v-else-if="columns[index - 1].type == 'input'" v-model="scope.row[columns[index - 1].prop]" :disabled="isDisabled"/>
           <el-select v-else-if="columns[index - 1].type == 'select'" v-model="scope.row[columns[index - 1].prop]">
             <el-option v-for="option in columns[index - 1].options" :key="option.value" :label="option.label"
               :value="option.value" />
@@ -77,9 +77,9 @@
           <el-text v-else type="info">{{ scope.row[columns[index - 1].prop] }}</el-text>
         </template>
       </el-table-column>
-      <el-table-column v-if="viewMode == 'edit' " label="操作" fixed="right" width="150" align="center">
+      <el-table-column v-if="viewMode == 'edit' || isOperation " label="操作" fixed="right" width="150" align="center" >
         <template #default="scope">
-          <el-button-group>
+          <el-button-group v-if="!isShow">
             <el-button type="primary" @click="handleUpload(scope.$index, scope.row)" :disabled="!isDifferent(scope.$index, scope.row)">
               <el-icon>
                 <Upload />
@@ -91,8 +91,17 @@
               </el-icon>
             </el-button>
           </el-button-group>
+          <el-button-group v-else>
+            <el-button type="primary" @click="handleConfirm(scope.row)">
+              <el-icon><Select /></el-icon>
+            </el-button>
+            <el-button type="danger" @click="handleReject(scope.row)">
+              <el-icon><Close /></el-icon>
+            </el-button>
+          </el-button-group>
         </template>
       </el-table-column>
+     
     </el-table>
   </div>
   <div style="display: flex; align-items: center; flex-direction: column;">
@@ -119,6 +128,11 @@ const loadData = async () => {
   commitQueryData.value["pageSize"] = recordsPerPage.value
   if (id.value) {
     commitQueryData.value[idName.value] = id.value
+  }
+  if (filter.value) {
+    for (let i = 0; i < filter.value.length; i++) {
+      commitQueryData.value[filter.value[i].key] = filter.value[i].value
+    }
   }
   await request.post('/' + table.value + '/search' + table.value, commitQueryData.value).then((response) => {
     console.log("loadData")
@@ -162,6 +176,71 @@ const columns = ref([])
 const table = ref(inject('table'))
 const id = ref(inject('id'))
 const idName = ref(inject('idName'))
+const pkid = ref(inject('pkid'))
+const isOperation = ref(inject('isOperation'))
+const isDisabled = ref(inject('isDisabled'))
+const filter=ref(inject('filter'))
+const isShow=ref(inject('isShow'))
+const handleReject=(row)=>{
+  ElMessageBox.confirm('确认驳回第'+row[pkid.value]+'号申请吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async () => {
+    row['sarpass']='拒绝'
+    console.log(row)
+    const response=await request.put('/'+table.value+'/update'+table.value,row);
+    switch(response.code){
+      case '-1':
+        ElMessageBox.alert('拒绝失败'+(response.msg==null ? "":response.msg), '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
+        })
+        break
+      case '200':
+        ElMessageBox.alert('拒绝成功'+(response.msg==null ? "":response.msg), '提示', {
+          confirmButtonText: '确定',
+          type: 'success'
+        })
+        break
+    }
+    setTimeout(() => {
+      loadData()
+    }, 200)
+  }).catch(() => {
+    // 处理取消操作
+  })
+}
+const handleConfirm=(row)=>{
+  ElMessageBox.confirm('确认通过第'+row[pkid.value]+'号申请吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async () => {
+    row['sarpass']='通过'
+    console.log(row)
+    const response=await request.put('/'+table.value+'/update'+table.value,row);
+    switch(response.code){
+      case '-1':
+        ElMessageBox.alert('通过失败'+(response.msg==null ? "":response.msg), '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
+        })
+        break
+      case '200':
+        ElMessageBox.alert('通过成功'+(response.msg==null ? "":response.msg), '提示', {
+          confirmButtonText: '确定',
+          type: 'success'
+        })
+        break
+    }
+    setTimeout(() => {
+      loadData()
+    }, 200)
+  }).catch(() => {
+    // 处理取消操作
+  })
+}
 //加载数据
 /*
   currentPage: 当前页码, 从1开始
@@ -238,13 +317,13 @@ const handleUpload = async (index, row) => {
         const response=await request.put('/'+table.value+'/update'+table.value,row);
         switch(response.code){
           case '-1':
-            ElMessageBox.alert('更新失败', '提示', {
+            ElMessageBox.alert('更新失败'+(response.msg==null ? "":response.msg), '提示', {
               confirmButtonText: '确定',
               type: 'warning'
             })
             break
           case '200':
-            ElMessageBox.alert('更新成功', '提示', {
+            ElMessageBox.alert('更新成功'+(response.msg==null ? "":response.msg), '提示', {
               confirmButtonText: '确定',
               type: 'success'
             })
@@ -273,18 +352,18 @@ const handleDelete = async (index, row) => {
       type: 'warning'
     }).then(async () => {
       console.log("delete")
-      console.log(idName.value)
+      console.log(pkid.value)
       console.log(row)
-      const response=await request.delete('/'+table.value+'/delete'+table.value+'/'+row[idName.value]);
+      const response=await request.delete('/'+table.value+'/delete'+table.value+'/'+row[pkid.value]);
       switch(response.code){
         case '-1':
-          ElMessageBox.alert('删除失败', '提示', {
+          ElMessageBox.alert('删除失败'+(response.msg==null ? "":response.msg), '提示', {
             confirmButtonText: '确定',
             type: 'warning'
           })
           break
         case '200':
-          ElMessageBox.alert('删除成功', '提示', {
+          ElMessageBox.alert('删除成功'+(response.msg==null ? "":response.msg), '提示', {
             confirmButtonText: '确定',
             type: 'success'
           })
@@ -319,17 +398,14 @@ const handleGetId = async (index) => {
 }
 
 //视图模式 | 编辑模式
-const viewMode = ref('edit')
-const viewModeConfig = {
-  edit:
-  {
-    button: 'info',
-  },
-  view:
-  {
-    button: 'primary',
+const viewMode = ref(inject('viewMode'))
+const viewModeConfig = ((mode)=>{
+ if (mode == 'view') {
+    return 'info'
+  } else {
+    return 'primary'
   }
-}
+})(viewMode.value)
 const handleSwitchView = () => {
   switch (viewMode.value) {
     case 'edit':
@@ -375,7 +451,7 @@ const handleQueryMode =computed(
     
   //获取 commitQueryData 对象的键名数组
   // 检查键名数组中是否有除了 'pageNum' 和 'pageSize' 之外的元素
-  if (Object.keys(commitQueryData.value).length > 2+(id.value === undefined ? 0:1)) {
+  if (Object.keys(commitQueryData.value).length > 2+(id.value === undefined ? 0:1)+(filter.value === undefined ? 0:filter.value.length)) {
     return 'warning'
   } else {
     return 'primary'

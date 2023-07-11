@@ -177,14 +177,6 @@
               <User theme="filled" size="24" fill="#333" :strokeWidth="1" />
             </template>
           </el-menu-item>
-          <el-menu-item index="/admin/staffapplicationrecord" v-if="role == 'admin'">
-            <template #title>
-              <span>已申请记录</span>
-            </template>
-            <template #>
-              <ListAdd theme="filled" size="24" fill="#333" :strokeWidth="1" />
-            </template>
-          </el-menu-item>
           <el-menu-item index="/admin/user" v-if="role == 'admin'">
             <template #title>
               <span>用户信息</span>

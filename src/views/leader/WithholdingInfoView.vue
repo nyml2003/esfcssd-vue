@@ -10,4 +10,7 @@ import Cookies from "js-cookie";
 provide('table', 'Withheldbill');
 provide('id',JSON.parse(Cookies.get('admin')).usrPermission)
 provide('idName','wbFinancialID')
+provide('isOperation',false)
+provide('isDisabled',true)
+provide('viewMode','view')
 </script>

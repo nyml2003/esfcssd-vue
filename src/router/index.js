@@ -79,6 +79,16 @@ const routes = [
         component: () => import("@/views/admin/AdminView.vue"),
         children:[
           {
+            path:'pending-applications',
+            name:'PendingApplications',
+            component: () => import("@/views/admin/PendingApplicationsView.vue"),
+          },
+          {
+            path:'all-applications',
+            name:'AllApplications',
+            component: () => import("@/views/admin/AllApplicationsView.vue")
+          },
+          {
             path:'account',
             name:'Account',
             component: () => import("@/views/admin/AccountView.vue"),

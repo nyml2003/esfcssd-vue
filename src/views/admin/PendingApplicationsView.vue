@@ -9,4 +9,15 @@ import { provide,ref,onMounted } from 'vue';
 import request from '@/utils/request'
 provide('table', 'Staffapplicationrecord');
 provide('idName','sarid')
+provide('filter',[
+    {
+        "key":"sarPass",
+        "value": "未处理"
+    }
+])
+provide('isOperation',true)
+provide('isDisabled',true)
+provide('isShow',true)
+provide('viewMode','view')
+provide('pkid','sarid')
 </script>
