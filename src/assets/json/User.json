@@ -25,5 +25,8 @@
             "label":"用户权限",
             "type":"input"
         }
+    ],
+    "queryRule":[
+        
     ]
 }

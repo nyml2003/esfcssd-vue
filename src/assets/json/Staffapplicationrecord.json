@@ -1,0 +1,57 @@
+{
+    "column": [
+      {
+        "prop": "sarid",
+        "label": "员工申请表ID",
+        "type": "input"
+      },
+      {
+        "prop": "sartime",
+        "label": "申请时间",
+        "type": "input"
+      },
+      {
+        "prop":"sarstaffid",
+        "label":"申请员工ID",
+        "type":"input"
+      },
+      {
+        "prop":"sarpass",
+        "label":"是否通过",
+        "type":"input"
+      }
+    ],
+    "queryRule": [
+      {
+        "prop": "sarid",
+        "label": "员工申请表ID",
+        "type": "text"
+      },
+      {
+        "prop":"sarStaffID",
+        "label":"申请员工ID",
+        "type":"text"
+      },
+      {
+        "prop":"sarCompanyID",
+        "label":"申请公司ID",
+        "type":"text"
+      },
+      {
+        "prop":"startTime",
+        "label":"开始时间",
+        "type":"text"
+      },
+      {
+        "prop":"endTime",
+        "label":"结束时间",
+        "type":"text"
+      },
+      {
+        "prop":"sarPass",
+        "label":"是否通过",
+        "type":"text"
+      }
+
+    ]
+  }

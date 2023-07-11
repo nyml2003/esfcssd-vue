@@ -1,0 +1,21 @@
+{
+    "column":[
+        {
+            "prop":"fid",
+            "label":"id",
+            "type":"input"
+        },
+        {
+            "prop":"fparentId",
+            "label":"上级部门",
+            "type":"input"
+        },
+        {
+            "prop":"fregion",
+            "label":"地区",
+            "type":"input"
+        }
+    ],
+    "queryRule":[
+    ]
+}

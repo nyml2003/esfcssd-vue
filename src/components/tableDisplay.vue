@@ -80,7 +80,7 @@
       <el-table-column v-if="viewMode == 'edit' " label="操作" fixed="right" width="150" align="center">
         <template #default="scope">
           <el-button-group>
-            <el-button type="primary" @click="handleUpload(scope.$index, scope.row)">
+            <el-button type="primary" @click="handleUpload(scope.$index, scope.row)" :disabled="!isDifferent(scope.$index, scope.row)">
               <el-icon>
                 <Upload />
               </el-icon>
@@ -120,17 +120,11 @@ const loadData = async () => {
   if (id.value) {
     commitQueryData.value[idName.value] = id.value
   }
-  console.log('idName')
-  console.log(table.value)
-  console.log(idName.value)
   await request.post('/' + table.value + '/search' + table.value, commitQueryData.value).then((response) => {
-    console.log(commitQueryData.value)
     console.log("loadData")
-    console.log(response.data)
     console.log(response)
     tableData.value = response.data.list
     total.value = response.data.total
-    console.log(tableData.value)
     recordsOnPage.value = tableData.value.length
     tableDataCopy = JSON.parse(JSON.stringify(tableData.value))
     const column = require('@/assets/json/' + table.value + '.json')
@@ -168,9 +162,6 @@ const columns = ref([])
 const table = ref(inject('table'))
 const id = ref(inject('id'))
 const idName = ref(inject('idName'))
-const injected=inject()
-console.log('inject')
-console.log(inject())
 //加载数据
 /*
   currentPage: 当前页码, 从1开始
@@ -192,9 +183,7 @@ const handleCurrentChange = (page) => {
 //编辑模式的增删改查
 const isDifferent = (index, row) => {
   rowCopy = tableDataCopy[index]
-  console.log("isDifferent")
-  console.log(rowCopy)
-  console.log(row)
+  if (rowCopy === undefined) return true
   for (let key in rowCopy) {
     if (rowCopy[key] !== row[key]) {
       return true
@@ -246,7 +235,21 @@ const handleUpload = async (index, row) => {
       }, 200)
     } else {
       if (isDifferent(index, row)) {
-        await request.put('/'+table.value+'/update'+table.value,row);
+        const response=await request.put('/'+table.value+'/update'+table.value,row);
+        switch(response.code){
+          case '-1':
+            ElMessageBox.alert('更新失败', '提示', {
+              confirmButtonText: '确定',
+              type: 'warning'
+            })
+            break
+          case '200':
+            ElMessageBox.alert('更新成功', '提示', {
+              confirmButtonText: '确定',
+              type: 'success'
+            })
+            break
+        }
         setTimeout(() => {
           loadData()
         }, 200)

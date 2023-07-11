@@ -1,0 +1,22 @@
+{
+    "column": [
+      {
+        "prop": "dpfid",
+        "label": "残联ID",
+        "type": "input"
+      },
+      {
+        "prop": "dpfregion",
+        "label": "所属地区",
+        "type": "input"
+      },
+      {
+        "prop":"dpfparentid",
+        "label":"上级残联ID",
+        "type":"input"
+      }
+    ],
+    "queryRule":[
+        
+    ]
+  }

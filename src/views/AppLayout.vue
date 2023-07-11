@@ -6,12 +6,12 @@
         <img src="@/assets/image/logo.png" alt="" style="width: 80px; position: relative; top: 15px; left: 10px">
         <span style="margin-left: 20px; font-size: 24px">残疾人就业保障金征收及使用监管系统</span>
       </div>
-      <el-select v-model="role">
+      <el-select v-model="role" v-if="false">
         <el-option label="单位" value="enterprise"></el-option>
         <el-option label="领导" value="leader"></el-option>
         <el-option label="管理员" value="admin"></el-option>
       </el-select>
-      <el-button @click="handleRole"></el-button>
+      <el-button @click="handleRole" v-if="false"></el-button>
       
       <div style="flex: 1; text-align: right; padding-right: 20px">
         

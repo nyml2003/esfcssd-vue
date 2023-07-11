@@ -63,10 +63,10 @@
             </template>
           </el-input>
         </el-form-item>
-        <el-select v-model="admin" class="m-2" placeholder="Select" size="large">
+        <el-select v-model="admin"  placeholder="Select" size="large" v-if="true">
           <el-option v-for="item in defaultOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
-        <div style="width: 100%; display: flex; justify-content: center">
+        <div style=" display: flex; justify-content: center; ">
           <el-button size="large" type="primary" @click="login">登录</el-button>
         </div>
       </el-form>
