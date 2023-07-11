@@ -52,8 +52,24 @@ const routes = [
         children:[
           {
             path:'account',
-            name:'Account',
+            name:'Leader_Account',
             component: () => import("@/views/leader/AccountView.vue"),
+
+          },
+          {
+            path:'withholding-info',
+            name:'WithholdingInfo',
+            component: () => import("@/views/leader/WithholdingInfoView.vue"),
+          },
+          {
+            path:'expense-bill',
+            name:'Leader_ExpenseBill',
+            component: () => import("@/views/leader/ExpenseBillView.vue"),
+          },
+          {
+            path:'collect-bill',
+            name:'Leader_CollectBill',
+            component: () => import("@/views/leader/CollectBillView.vue"),
           }
         ]
       },

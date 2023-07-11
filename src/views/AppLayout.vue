@@ -57,7 +57,7 @@
                 <User theme="filled" size="24" fill="#333" :strokeWidth="1" />
               </template>
             </el-menu-item>
-            <el-menu-item index="/enterpriseInfo/applicationRecord" v-if="role == 'enterprise'">
+            <el-menu-item index="/enterprise/applicationRecord" v-if="role == 'enterprise'">
               <template #title>
                 <span>已申请记录</span>
               </template>
@@ -65,7 +65,7 @@
                 <ListAdd theme="filled" size="24" fill="#333" :strokeWidth="1" />
               </template>
             </el-menu-item>
-            <el-menu-item index="/enterpriseInfo/disabilityAllowanceReceivable" v-if="role == 'enterprise'">
+            <el-menu-item index="/enterprise/disabilityAllowanceReceivable" v-if="role == 'enterprise'">
               <template #title>
                 <span>残保金待收信息</span>
               </template>
@@ -73,9 +73,9 @@
                 <Wallet theme="filled" size="24" fill="#333" :strokeWidth="1" />
               </template>
             </el-menu-item>
-            <el-menu-item index="/leader/collection-info" v-if="role == 'leader'">
+            <el-menu-item index="/leader/collect-bill" v-if="role == 'leader'">
                 <template #title>
-                  <span>代扣信息</span>
+                  <span>代收信息</span>
                 </template>
                 <template #>
                   <Income theme="filled" size="24" fill="#333" :strokeWidth="1"/>
@@ -83,13 +83,13 @@
               </el-menu-item>
               <el-menu-item index="/leader/withholding-info" v-if="role == 'leader'">
                 <template #title>
-                  <span>代收信息</span>
+                  <span>代扣信息</span>
                 </template>
                 <template #>
                   <IncomeOne theme="filled" size="24" fill="#333" :strokeWidth="1"/>
                 </template>
               </el-menu-item>
-            <el-menu-item index="/leader/collection"  v-if="role == 'leader'">
+            <el-menu-item index="/leader/expense-bill"  v-if="role == 'leader'">
               <template #title>
                 <span>使用信息</span>
               </template>
@@ -219,7 +219,7 @@
 
 <script setup>
 
-import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick,provide } from 'vue';
 import { ElMessageBox } from 'element-plus';
 import Cookies from 'js-cookie';
 import router from '@/router';
@@ -249,7 +249,6 @@ const role = ref(((usrClass)=>{
     return 'unknown';
   }
 })(JSON.parse(Cookies.get('admin')).usrClass))
-  
 
 const handleRole=()=>{
   console.log(JSON.parse(Cookies.get('admin')).usrClass)
