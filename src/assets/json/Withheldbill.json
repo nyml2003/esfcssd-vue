@@ -27,5 +27,17 @@
             "label":"时间",
             "type":"input"
         }
+    ],
+    "queryRule":[
+        {
+            "prop":"max_wbamount",
+            "label":"最大金额",
+            "type":"text"
+        },
+        {
+            "prop":"min_wbamount",
+            "label":"最小金额",
+            "type":"text"
+        }
     ]
 }

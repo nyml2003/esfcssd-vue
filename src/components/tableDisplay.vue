@@ -117,7 +117,14 @@ import { ElMessageBox } from "element-plus"
 const loadData = async () => {
   commitQueryData.value["pageNum"] = currentPage.value
   commitQueryData.value["pageSize"] = recordsPerPage.value
+  if (id.value) {
+    commitQueryData.value[idName.value] = id.value
+  }
+  console.log('idName')
+  console.log(table.value)
+  console.log(idName.value)
   await request.post('/' + table.value + '/search' + table.value, commitQueryData.value).then((response) => {
+    console.log(commitQueryData.value)
     console.log("loadData")
     console.log(response.data)
     console.log(response)
@@ -159,7 +166,11 @@ const columns = ref([])
 
 //表名，由路由传入
 const table = ref(inject('table'))
-
+const id = ref(inject('id'))
+const idName = ref(inject('idName'))
+const injected=inject()
+console.log('inject')
+console.log(inject())
 //加载数据
 /*
   currentPage: 当前页码, 从1开始
@@ -213,7 +224,23 @@ const handleUpload = async (index, row) => {
     type: 'warning'
   }).then(async () => {
     if (index === recordsOnPage.value) {
-      await request.post('/'+table.value+'/add'+table.value,row)
+      const response=await request.post('/'+table.value+'/add'+table.value,row)
+      console.log('add a row')
+      switch (response.code){
+        case '-1':
+          ElMessageBox.alert('添加失败', '提示', {
+            confirmButtonText: '确定',
+            type: 'warning'
+          })
+          break
+        case '200':
+          ElMessageBox.alert('添加成功', '提示', {
+            confirmButtonText: '确定',
+            type: 'success'
+          })
+          break
+      }
+      console.log(response)
       setTimeout(() => {
         loadData()
       }, 200)
@@ -242,7 +269,24 @@ const handleDelete = async (index, row) => {
       cancelButtonText: '取消',
       type: 'warning'
     }).then(async () => {
-      await request.delete('/'+table.value+'/delete'+table.value+'/'+row["cID"]);
+      console.log("delete")
+      console.log(idName.value)
+      console.log(row)
+      const response=await request.delete('/'+table.value+'/delete'+table.value+'/'+row[idName.value]);
+      switch(response.code){
+        case '-1':
+          ElMessageBox.alert('删除失败', '提示', {
+            confirmButtonText: '确定',
+            type: 'warning'
+          })
+          break
+        case '200':
+          ElMessageBox.alert('删除成功', '提示', {
+            confirmButtonText: '确定',
+            type: 'success'
+          })
+          break
+      }
       setTimeout(() => {
         loadData()
       }, 200)
@@ -311,6 +355,8 @@ const commitQueryData = ref({})
 const isSearchDialogVisible = ref(false)
 const handleSearch = () => {
   console.log( Object.keys(commitQueryData.value).length)
+  console.log('id')
+    console.log(id.value === undefined ? 0:1)
   isSearchDialogVisible.value = true
 }
 
@@ -323,9 +369,10 @@ const handleRefresh = () => {
 const queryMode = ref('empty')
 const handleQueryMode =computed(
   () => {
+    
   //获取 commitQueryData 对象的键名数组
   // 检查键名数组中是否有除了 'pageNum' 和 'pageSize' 之外的元素
-  if (Object.keys(commitQueryData.value).length > 2 ) {
+  if (Object.keys(commitQueryData.value).length > 2+(id.value === undefined ? 0:1)) {
     return 'warning'
   } else {
     return 'primary'

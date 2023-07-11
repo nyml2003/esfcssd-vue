@@ -11,6 +11,8 @@
         <el-option label="领导" value="leader"></el-option>
         <el-option label="管理员" value="admin"></el-option>
       </el-select>
+      <el-button @click="handleRole"></el-button>
+      
       <div style="flex: 1; text-align: right; padding-right: 20px">
         
         <el-button type="danger" @click="logout"><el-icon>
@@ -210,6 +212,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 
@@ -235,7 +238,22 @@ import {
 const sideBar = ref(null);
 const isMouseInside = ref(false);
 const isMenuExpanded = ref(false);
-const role = ref('admin')
+const role = ref(((usrClass)=>{
+  if (usrClass === '企业') {
+    return 'enterprise';
+  } else if (usrClass === '领导') {
+    return 'leader';
+  } else if (usrClass === '管理员') {
+    return 'admin';
+  } else {
+    return 'unknown';
+  }
+})(JSON.parse(Cookies.get('admin')).usrClass))
+  
+
+const handleRole=()=>{
+  console.log(JSON.parse(Cookies.get('admin')).usrClass)
+}
 const handleMouseEnter = () => {
   if (isMenuExpanded.value) {
     return;

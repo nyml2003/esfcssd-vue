@@ -80,7 +80,7 @@
       {
         "prop": "disabled",
         "label": "是否健康",
-        "type": "select"
+        "type": "text"
   
       },
       {

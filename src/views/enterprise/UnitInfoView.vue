@@ -12,7 +12,7 @@ import { onMounted, ref } from "vue";
 import request from '@/utils/request'
 import { inject } from 'vue'
 const id = ref(inject('id'));
-const table = ref(inject('table'));
+const table = ref('Company');
 const commitQueryData = ref({})
 const currentPage = ref(1)
 const recordsPerPage = ref(10)

@@ -63,6 +63,9 @@
             </template>
           </el-input>
         </el-form-item>
+        <el-select v-model="admin" class="m-2" placeholder="Select" size="large">
+          <el-option v-for="item in defaultOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
         <div style="width: 100%; display: flex; justify-content: center">
           <el-button size="large" type="primary" @click="login">登录</el-button>
         </div>
@@ -79,9 +82,68 @@ import router from "@/router";
 import SlideVerify from 'vue3-slide-verify';
 const loginAdmin = ref({});
 const admin = ref({
-  usrName: "admin",
-  passWd: "admin",
+  usrName: 'admin',
+  passWd: 'admin',
 });
+const defaultOptions=[
+  {
+    value: 
+    {
+      usrName: 'admin',
+      passWd: 'admin',
+    },
+    label: '管理员'
+  },
+  {
+    value: 
+    {
+      usrName: 'leader1',
+      passWd: 'leader1',
+    },
+    label: '领导1'
+  },
+  {
+    value: 
+    {
+      usrName: 'leader2',
+      passWd: 'leader2',
+    },
+    label: '领导2'
+  },
+  {
+    value: 
+    {
+      usrName: 'enterprise1',
+      passWd: 'enterprise1',
+    },
+    label: '企业1'
+  },
+  {
+    value: 
+    {
+      usrName: 'enterprise2',
+      passWd: 'enterprise2',
+    },
+    label: '企业2'
+  },
+  {
+    value: 
+    {
+      usrName: 'enterprise8',
+      passWd: 'enterprise8',
+    },
+    label: '企业8'
+  },
+  {
+    value:
+    {
+      usrName: '',
+      passWd: '',
+    },
+    label:'请选择'
+  }
+]
+
 const rules = {
   usrName: [
     { required: true, message: "请输入用户名", trigger: "blur" },
@@ -106,6 +168,7 @@ const login = async () => {
         Cookies.set('admin', JSON.stringify(loginAdmin.value))
         console.log('onSuccess')
         console.log(loginAdmin.value)
+        console.log(Cookies.get('admin'))
         router.push('/')
       } catch (error) {
         console.error(error)

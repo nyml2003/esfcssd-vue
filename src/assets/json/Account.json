@@ -20,5 +20,32 @@
             "label":"最后更新时间",
             "type":"input"
         } 
+    ],
+    "queryRule":[
+        {
+            "prop":"aid",
+            "label":"账户ID",
+            "type":"text"
+        },
+        {
+            "prop":"abankcard",
+            "label":"银行卡号",
+            "type":"text"
+        },
+        {
+            "prop":"abalance",
+            "label":"账户余额",
+            "type":"text"
+        },
+        {
+            "prop":"max_alastupdate",
+            "label":"最后更新时间上限",
+            "type":"text"
+        },
+        {
+            "prop":"min_alastupdate",
+            "label":"最后更新时间下限",
+            "type":"text"
+        }
     ]
 }

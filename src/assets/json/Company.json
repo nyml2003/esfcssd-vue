@@ -1,29 +1,62 @@
 {
-    "column":[
-        {
-            "prop":"caddress",
-            "label":"地址",
-            "type":"input"
-        },
-        {
-            "prop":"cid",
-            "label":"id",
-            "type":"input"
-        },
-        {
-            "prop":"cname",
-            "label":"名称",
-            "type":"input"
-        },
-        {
-            "prop":"cregion",
-            "label":"区域",
-            "type":"input"
-        },
-        {
-            "prop":"csocialCreditCode",
-            "label":"社会信用代码",
-            "type":"input"
-        }
-    ]
+  "column": [
+    {
+      "prop": "cid",
+      "label": "公司ID",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "csocialCreditCode",
+      "label": "统一社会信用代码",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "cname",
+      "label": "公司名",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "cregion",
+      "label": "所属地区",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "caddress",
+      "label": "详细地址",
+      "width": "100",
+      "type": "input"
+    }
+  ],
+  "queryRule": [
+    {
+      "prop": "cID",
+      "label": "公司ID",
+      "type": "text"
+    },
+    {
+      "prop": "cName",
+      "label": "公司名",
+      "type": "text"
+    },
+    {
+      "prop": "cAddress",
+      "label": "详细地址",
+      "type": "text"
+    },
+    {
+      "prop": "cRegion",
+      "label": "所属地区",
+      "type": "text"
+
+    },
+    {
+      "prop": "cSocialCreditCode",
+      "label": "统一社会信用代码",
+      "type": "text"
+    }
+  ]
 }

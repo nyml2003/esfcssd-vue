@@ -1,35 +1,90 @@
 {
-    "column":[
-        {
-            "prop":"ebID",
-            "label":"ID",
-            "type":"input"
-        },
-        {
-            "prop":"ebAccountID",
-            "label":"Account ID",
-            "type":"input"
-        },
-        {
-            "prop":"ebFinancialID",
-            "label":"Financial ID",
-            "type":"input"
-        },
-        {
-            "prop":"ebAmount",
-            "label":"Amount",
-            "type":"input"
-        },
-        {
-            "prop":"ebTime",
-            "label":"Time",
-            "type":"input"
-        },
-        {
-            "prop":"ebObject",
-            "label":"Object",
-            "type":"input"
-        }
-
-    ]
+  "column": [
+    {
+      "prop": "ebID",
+      "label": "支出账单ID",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "ebFinancialID",
+      "label": "支出财政局部门ID",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "ebAccountID",
+      "label": "支出账户ID",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "ebAmount",
+      "label": "支出金额",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "ebTime",
+      "label": "支出时间",
+      "width": "100",
+      "type": "input"
+    },
+    {
+      "prop": "ebObject",
+      "label": "支出用途",
+      "width": "100",
+      "type": "input"
+    }
+  ],
+  "queryRule": [
+    {
+      "prop": "ebID",
+      "label": "支出账单ID",
+      "width": "100",
+      "type": "text"
+    },
+    {
+      "prop": "ebFinancialID",
+      "label": "支出财政局部门ID",
+      "width": "100",
+      "type": "text"
+    },
+    {
+      "prop": "ebAccountID",
+      "label": "支出账户ID",
+      "width": "100",
+      "type": "text"
+    },
+    {
+      "prop": "maxAmount",
+      "label": "支出金额上限",
+      "width": "100",
+      "type": "text"
+    },
+    {
+      "prop": "minAmount",
+      "label": "支出金额下限",
+      "width": "100",
+      "type": "text"
+    },
+    {
+      "prop": "maxDate",
+      "label": "最晚支出时间",
+      "width": "100",
+      "type": "text"
+    },
+    {
+      "prop": "minDate",
+      "label": "最早支出时间",
+      "width": "100",
+      "type": "text"
+    },
+    {
+      "prop": "ebObject",
+      "label": "支出用途",
+      "width": "100",
+      "type": "text"
+    }
+  ]
 }
