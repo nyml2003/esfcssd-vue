@@ -11,4 +11,5 @@ provide('idName','aid');
 provide('isOperation',true);
 provide('isDisabled',false);
 provide('viewMode','edit');
+provide('pkid','aid');
 </script>

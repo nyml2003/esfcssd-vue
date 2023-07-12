@@ -249,7 +249,7 @@ const handleConfirm=(row)=>{
   recordsOnPage: 当前页的记录数
 */
 const currentPage = ref(1)
-const recordsPerPage = ref(9)
+const recordsPerPage = ref(15)
 const total = ref(0)
 const recordsOnPage = ref(0)
 const handleCurrentChange = (page) => {

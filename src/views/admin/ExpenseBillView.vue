@@ -8,4 +8,5 @@ import tableDisplay from '@/components/tableDisplay.vue';
 import { provide } from 'vue';
 provide('table', 'Expensebill');
 provide('idName','ebID');
+provide('pkid','ebID');
 </script>

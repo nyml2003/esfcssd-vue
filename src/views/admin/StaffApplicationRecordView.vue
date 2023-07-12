@@ -9,4 +9,5 @@ import { provide,ref,onMounted } from 'vue';
 import request from '@/utils/request'
 provide('table', 'Staffapplicationrecord');
 provide('idName','sarid')
+provide('pkid','sarid')
 </script>
